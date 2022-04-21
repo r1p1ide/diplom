@@ -5,8 +5,8 @@ import lombok.SneakyThrows;
 import org.example.diplom.dao.AuthInfoRepository;
 import org.example.diplom.dao.UserInfoRepository;
 import org.example.diplom.dto.UserDto;
-import org.example.diplom.exception.ApiException;
 import org.example.diplom.exception.ApiInvalidParametersException;
+import org.example.diplom.exception.ApiUserFoundException;
 import org.example.diplom.model.AuthInfo;
 import org.example.diplom.model.UserInfo;
 import org.example.diplom.service.AdministrationService;
@@ -14,6 +14,7 @@ import org.example.diplom.service.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,31 +42,33 @@ public class AdministrationServiceImpl implements AdministrationService {
 
         LOG.log(Level.INFO, ENTRY);
 
-        if (!(userDto.getLogin().isEmpty() &&
-                userDto.getFirstName().isEmpty() &&
-                userDto.getLastName().isEmpty() &&
-                userDto.getEmail().isEmpty() &&
-                userDto.getPhone().isEmpty()) &&
-                (userDto.getRole().equalsIgnoreCase("Admin") || userDto.getRole().equalsIgnoreCase("User"))) {
+        if (!(userDto.isEmpty() && userDto.getEmail().matches("^[^\\s@]+@([^\\s@.,]+\\.)+[^\\s@.,]{2,}$") &&
+                userDto.getPhone().matches("[\\d]+") &&
+                (userDto.getRole().equalsIgnoreCase("Admin")
+                        || userDto.getRole().equalsIgnoreCase("User")))) {
 
-            AuthInfo auth = new AuthInfo();
-            auth.setLogin(userDto.getLogin());
-            auth.setPassword(generateRandomPassword());
-            senderService.sendEmail(userDto.getEmail(),
-                    "Вы были успешно зарегистрированы.",
-                    "Ваш логин: " + userDto.getLogin() + "\nВаш пароль: " + auth.getPassword());
-            auth.setPassword(toMD5(auth.getPassword()));
-            try {
+            List<UserInfo> userList = userInformationRepository.findByLogin(userDto.getLogin());
+            if (userList.isEmpty()) {
+                AuthInfo auth = new AuthInfo();
+                auth.setLogin(userDto.getLogin());
+                auth.setPassword(generateRandomPassword());
+                senderService.sendEmail(userDto.getEmail(),
+                        "Вы были успешно зарегистрированы.",
+                        "Ваш логин: " + userDto.getLogin() + "\nВаш пароль: " + auth.getPassword());
+                auth.setPassword(toMD5(auth.getPassword()));
+
                 authInformationRepository.save(auth);
                 UserInfo user = new UserInfo(userDto);
                 user.setAuth_id(auth.getId());
                 userInformationRepository.save(user);
-
-            } catch (ApiException e) {
-                throw new ApiInvalidParametersException("Request parameters are missing or not in the correct format.");
+            } else {
+                throw new ApiUserFoundException("User with this login is already exists!");
             }
 
             LOG.log(Level.INFO, EXIT);
+
+        } else {
+            throw new ApiInvalidParametersException("Request parameters are missing or not in the correct format.");
         }
     }
 
@@ -75,7 +78,8 @@ public class AdministrationServiceImpl implements AdministrationService {
         LOG.log(Level.INFO, ENTRY);
 
         if (!(login.isEmpty())) {
-
+            List<UserInfo> userInfoList = userInformationRepository.findByLogin(login);
+            List<AuthInfo> authInfoList = authInformationRepository.findByLogin(login);
         }
     }
 

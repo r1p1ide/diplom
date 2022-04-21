@@ -42,7 +42,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
             AuthInfo authInfo = userOptional.get(0);
 
-                if (DigestUtils.md5Hex(dto.getPassword()).equals(DigestUtils.md5Hex(authInfo.getPassword()))) {
+            if (DigestUtils.md5Hex(dto.getPassword()).equals(authInfo.getPassword())) {
                     LOG.log(Level.INFO, EXIT);
                     return true;
                 } else {

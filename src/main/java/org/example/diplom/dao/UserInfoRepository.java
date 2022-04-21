@@ -13,7 +13,6 @@ import java.util.Optional;
 @Repository
 public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
 
-    //@Query(value = "SELECT ui FROM U ui WHERE ui.login=:login")
     List<UserInfo> findByLogin(String login);
 
     @Modifying
@@ -27,5 +26,4 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
                                @Param("email") String email,
                                @Param("phone") String phone,
                                @Param("role") Integer role);
-
 }

@@ -31,4 +31,10 @@ public class UserDto {
     @NotNull
     private String role;
 
+    public Boolean isEmpty() {
+        if (login == null || firstName == null || lastName == null || email == null || role == null) {
+            return true;
+        }
+        return false;
+    }
 }
