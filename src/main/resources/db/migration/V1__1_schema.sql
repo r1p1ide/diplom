@@ -3,7 +3,6 @@ CREATE TABLE auth_info
     id integer GENERATED ALWAYS AS IDENTITY,
     login varchar(20) NOT NULL,
     password varchar(100) NOT NULL,
-    code varchar(5),
     PRIMARY KEY (id)
 );
 
