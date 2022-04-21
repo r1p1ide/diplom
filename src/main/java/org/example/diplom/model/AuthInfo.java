@@ -27,5 +27,6 @@ public class AuthInfo {
     private String password;
 
     @Column(name = "code")
+    @JsonIgnore
     private String code;
 }
