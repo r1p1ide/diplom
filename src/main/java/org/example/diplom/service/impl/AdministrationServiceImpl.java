@@ -42,10 +42,10 @@ public class AdministrationServiceImpl implements AdministrationService {
 
         LOG.log(Level.INFO, ENTRY);
 
-        if (!(userDto.isEmpty() && userDto.getEmail().matches("^[^\\s@]+@([^\\s@.,]+\\.)+[^\\s@.,]{2,}$") &&
-                userDto.getPhone().matches("[\\d]+") &&
+        if (!(userDto.isEmpty() && userDto.getEmail().matches("^[^\\s@]+@([^\\s@.,]+\\.)+[^\\s@.,]{2,}$")) &&
+                userDto.getPhone().matches("^\\+[\\d]+$") &&
                 (userDto.getRole().equalsIgnoreCase("Admin")
-                        || userDto.getRole().equalsIgnoreCase("User")))) {
+                        || userDto.getRole().equalsIgnoreCase("User"))) {
 
             List<UserInfo> userList = userInformationRepository.findByLogin(userDto.getLogin());
             if (userList.isEmpty()) {

@@ -1,0 +1,99 @@
+{
+	"info": {
+		"_postman_id": "a5d87a09-445a-4f18-a4b8-ad987bdc9cd9",
+		"name": "diplom",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/admin/addUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"color\": \"green\",\r\n    \"cottonPart\": 95,\r\n    \"amount\": 10\r\n}\r\n"
+				},
+				"url": {
+					"raw": "localhost:8080/api/socks/outcome",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"socks",
+						"outcome"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auth/sign-in",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"color\": \"green\",\r\n    \"cottonPart\": 95,\r\n    \"amount\": 10\r\n}\r\n"
+				},
+				"url": {
+					"raw": "localhost:8080/api/socks/outcome",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"socks",
+						"outcome"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/change/reset-password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"color\": \"green\",\r\n    \"cottonPart\": 95,\r\n    \"amount\": 10\r\n}\r\n"
+				},
+				"url": {
+					"raw": "localhost:8080/api/socks/outcome",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"socks",
+						"outcome"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
