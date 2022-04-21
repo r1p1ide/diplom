@@ -17,7 +17,6 @@ public class AuthDto {
     @NotNull
     private String password;
 
-    //@NotNull
-    //private String code;
-
+    @NotNull
+    private String code;
 }

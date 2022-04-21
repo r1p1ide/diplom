@@ -28,5 +28,4 @@ public class LogbookHttpLogWriter implements HttpLogWriter {
     public void write(Correlation correlation, String response) throws IOException {
         LOG.log(Level.INFO, response);
     }
-
 }

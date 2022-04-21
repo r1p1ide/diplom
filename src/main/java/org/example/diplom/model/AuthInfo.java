@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.example.diplom.dto.AuthDto;
 
 import javax.persistence.*;
 
@@ -28,6 +26,6 @@ public class AuthInfo {
     @Column(name = "password")
     private String password;
 
-    //private String code;
-
+    @Column(name = "code")
+    private String code;
 }

@@ -71,16 +71,4 @@ public class AdministrationServiceImpl implements AdministrationService {
             throw new ApiInvalidParametersException("Request parameters are missing or not in the correct format.");
         }
     }
-
-    @Override
-    public void deleteUser(String login) {
-
-        LOG.log(Level.INFO, ENTRY);
-
-        if (!(login.isEmpty())) {
-            List<UserInfo> userInfoList = userInformationRepository.findByLogin(login);
-            List<AuthInfo> authInfoList = authInformationRepository.findByLogin(login);
-        }
-    }
-
 }

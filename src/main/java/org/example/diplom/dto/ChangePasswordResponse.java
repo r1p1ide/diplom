@@ -18,5 +18,4 @@ public class ChangePasswordResponse {
     private LocalDateTime timestamp;
 
     private String message;
-
 }

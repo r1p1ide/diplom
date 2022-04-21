@@ -59,6 +59,5 @@ public class ChangePasswordServiceImpl implements ChangePasswordService {
         } catch (ApiException e) {
             throw new ApiInvalidParametersException("Request parameters are missing or not in the correct format.");
         }
-
     }
 }

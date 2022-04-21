@@ -53,5 +53,4 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             throw new ApiInvalidParametersException("Request parameters are missing or not in the correct format.");
         }
     }
-
 }

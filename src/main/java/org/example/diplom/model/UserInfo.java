@@ -10,6 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user_info")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserInfo {
@@ -42,26 +43,6 @@ public class UserInfo {
     @Column(name = "role")
     private String role;
 
-    public void setAuth_id(Integer auth_id) {
-        this.auth_id = auth_id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public UserInfo(UserDto userDto) {
         this.login = userDto.getLogin();
         this.firstName = userDto.getFirstName();
@@ -70,5 +51,4 @@ public class UserInfo {
         this.phone = userDto.getPhone();
         this.role = userDto.getRole();
     }
-
 }
