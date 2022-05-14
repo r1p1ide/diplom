@@ -26,6 +26,6 @@ public class AuthInfo {
     @Column(name = "password")
     private String password;
 
-//    @Column(name = "code")
-//    private String code;
+    @Column(name = "code")
+    private String code;
 }

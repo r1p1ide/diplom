@@ -3,6 +3,7 @@ package org.example.diplom.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.diplom.dto.AuthDto;
 import org.example.diplom.dto.AuthResponse;
+import org.example.diplom.dto.AuthWithoutCodeDto;
 import org.example.diplom.service.AuthorizationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +31,23 @@ public class AuthController {
     private final AuthorizationService authorizationService;
 
     @PostMapping(value = "/sign-in", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<AuthResponse> signIn(@Valid @RequestBody AuthDto authDto){
+    public ResponseEntity<AuthResponse> signIn(@Valid @RequestBody AuthWithoutCodeDto authWithoutCodeDto){
 
         LOG.log(Level.INFO, ENTRY);
 
-        authorizationService.signIn(authDto);
+        authorizationService.signIn(authWithoutCodeDto);
+
+        LOG.log(Level.INFO, EXIT);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new AuthResponse(true, LocalDateTime.now(), "OK"));
+    }
+
+    @PostMapping(value = "/sign-in/verify", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<AuthResponse> signInWithCode(@Valid @RequestBody AuthDto authDto){
+
+        LOG.log(Level.INFO, ENTRY);
+
+        authorizationService.signInWithCode(authDto);
 
         LOG.log(Level.INFO, EXIT);
         return ResponseEntity.status(HttpStatus.OK).body(

@@ -57,7 +57,8 @@ public class ChangePasswordServiceImpl implements ChangePasswordService {
                 authInformationRepository.save(auth);
 
         } catch (ApiException e) {
-            throw new ApiInvalidParametersException("Request parameters are missing or not in the correct format.");
+            throw new ApiInvalidParametersException(
+                    "Неободимые параметры для запроса отсутствуют или имеют неверный формат.");
         }
     }
 }

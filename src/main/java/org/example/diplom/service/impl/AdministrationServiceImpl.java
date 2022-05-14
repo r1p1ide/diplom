@@ -22,6 +22,7 @@ import static org.example.diplom.resources.LoggerResources.ENTRY;
 import static org.example.diplom.resources.LoggerResources.EXIT;
 import static org.example.diplom.util.GenerateRandomPassword.generateRandomPassword;
 import static org.example.diplom.util.GenerateRandomPassword.toMD5;
+import static org.example.diplom.util.RegexResources.*;
 
 @Service
 @RequiredArgsConstructor
@@ -43,13 +44,13 @@ public class AdministrationServiceImpl implements AdministrationService {
         LOG.log(Level.INFO, ENTRY);
 
         if (
-                userDto.getLogin().matches("^\\S*$") && !userDto.getLogin().isEmpty() &&
-                userDto.getFirstName().matches("^[^\\s]+(\\s+[^\\s]+)*$") && !userDto.getFirstName().isEmpty() &&
-                userDto.getLastName().matches("^[^\\s]+(\\s+[^\\s]+)*$") && !userDto.getLastName().isEmpty() &&
-                userDto.getEmail().matches("^[^\\s@]+@([^\\s@.,]+\\.)+[^\\s@.,]{2,}$") &&
-                userDto.getPhone().matches("^\\+[\\d]+$") &&
-                (userDto.getRole().equalsIgnoreCase("Admin")
-                        || userDto.getRole().equalsIgnoreCase("User"))) {
+                userDto.getLogin().matches(LOGIN_CONDITION) && !userDto.getLogin().isEmpty() &&
+                userDto.getFirstName().matches(NAME_CONDITION) && !userDto.getFirstName().isEmpty() &&
+                userDto.getLastName().matches(NAME_CONDITION) && !userDto.getLastName().isEmpty() &&
+                userDto.getEmail().matches(EMAIL_CONDITION) &&
+                userDto.getPhone().matches(PHONE_CONDITION) &&
+                (userDto.getRole().equals("admin")
+                        || userDto.getRole().equals("user"))) {
 
             List<UserInfo> userList = userInformationRepository.findByLogin(userDto.getLogin());
             if (userList.isEmpty()) {
@@ -66,13 +67,14 @@ public class AdministrationServiceImpl implements AdministrationService {
                 user.setAuth_id(auth.getId());
                 userInformationRepository.save(user);
             } else {
-                throw new ApiUserFoundException("User with this login is already exists!");
+                throw new ApiUserFoundException("Пользователь с таким логином уже существует!");
             }
 
             LOG.log(Level.INFO, EXIT);
 
         } else {
-            throw new ApiInvalidParametersException("Request parameters are missing or not in the correct format.");
+            throw new ApiInvalidParametersException(
+                    "Неободимые параметры для запроса отсутствуют или имеют неверный формат.");
         }
     }
 }
