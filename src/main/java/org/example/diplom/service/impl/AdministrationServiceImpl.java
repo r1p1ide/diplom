@@ -34,8 +34,7 @@ public class AdministrationServiceImpl implements AdministrationService {
 
     private final AuthInfoRepository authInformationRepository;
 
-    @Autowired
-    private EmailSenderService senderService;
+    private final EmailSenderService senderService;
 
     @SneakyThrows
     @Override

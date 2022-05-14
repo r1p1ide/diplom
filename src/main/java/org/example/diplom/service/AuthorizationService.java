@@ -7,5 +7,7 @@ public interface AuthorizationService {
 
     Boolean signIn(AuthWithoutCodeDto authWithoutCodeDto);
 
+    Boolean signInV2(AuthWithoutCodeDto authWithoutCodeDto);
+
     Boolean signInWithCode(AuthDto authDto);
 }

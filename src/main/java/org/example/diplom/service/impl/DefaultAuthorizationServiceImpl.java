@@ -12,22 +12,20 @@ import org.example.diplom.model.AuthInfo;
 import org.example.diplom.model.UserInfo;
 import org.example.diplom.service.AuthorizationService;
 import org.example.diplom.service.EmailSenderService;
+import org.example.diplom.service.SmsSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.example.diplom.resources.LoggerResources.ENTRY;
-import static org.example.diplom.resources.LoggerResources.EXIT;
+import static org.example.diplom.resources.LoggerResources.*;
 import static org.example.diplom.util.GenerateRandomCode.generateRandomCode;
 
 @Service
 @RequiredArgsConstructor
-public class AuthorizationServiceImpl implements AuthorizationService {
+public class DefaultAuthorizationServiceImpl implements AuthorizationService {
 
     private final static Logger LOG = Logger.getLogger(AdministrationServiceImpl.class.getCanonicalName());
 
@@ -35,8 +33,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     private final UserInfoRepository userInfoRepository;
 
-    @Autowired
-    private EmailSenderService senderService;
+    private final EmailSenderService senderService;
+
+    private final SmsSenderService smsSenderService;
 
     @Override
     public Boolean signIn(AuthWithoutCodeDto authWithoutCodeDto) {
@@ -65,6 +64,34 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 return true;
             } else {
                 LOG.log(Level.INFO, EXIT);
+                return false;
+            }
+        } catch (ApiException e) {
+            throw new ApiInvalidParametersException(
+                    "Неободимые параметры для запроса отсутствуют или имеют неверный формат.");
+        }
+    }
+
+    @Override
+    public Boolean signInV2(AuthWithoutCodeDto authWithoutCodeDto) {
+        LOG.log(Level.INFO, ENTRY);
+
+        try {
+            List<AuthInfo> authList =
+                    authInfoRepository.findByLogin(authWithoutCodeDto.getLogin());
+
+            AuthInfo authInfo = authList.get(0);
+
+            if (DigestUtils.md5Hex(authWithoutCodeDto.getPassword()).equals(authInfo.getPassword())) {
+                authInfo.setCode(generateRandomCode());
+                authInfoRepository.save(authInfo);
+                smsSenderService.sendSms("79160899444",
+                        "Никому не сообщайте этот код: " + authInfo.getCode(),
+                        "TEST-SMS");
+                LOG.log(Level.INFO, EXIT);
+                return true;
+            } else {
+                LOG.log(Level.INFO, THROW);
                 return false;
             }
         } catch (ApiException e) {

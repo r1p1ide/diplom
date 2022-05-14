@@ -42,6 +42,18 @@ public class AuthController {
                 new AuthResponse(true, LocalDateTime.now(), "OK"));
     }
 
+    @PostMapping(value = "/sign-in-v2", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<AuthResponse> signInV2(@Valid @RequestBody AuthWithoutCodeDto authWithoutCodeDto){
+
+        LOG.log(Level.INFO, ENTRY);
+
+        authorizationService.signInV2(authWithoutCodeDto);
+
+        LOG.log(Level.INFO, EXIT);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new AuthResponse(true, LocalDateTime.now(), "OK"));
+    }
+
     @PostMapping(value = "/sign-in/verify", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthResponse> signInWithCode(@Valid @RequestBody AuthDto authDto){
 

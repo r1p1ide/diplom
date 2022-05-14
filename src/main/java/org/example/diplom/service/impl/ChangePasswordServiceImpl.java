@@ -9,12 +9,9 @@ import org.example.diplom.model.AuthInfo;
 import org.example.diplom.model.UserInfo;
 import org.example.diplom.service.ChangePasswordService;
 import org.example.diplom.service.EmailSenderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,8 +29,7 @@ public class ChangePasswordServiceImpl implements ChangePasswordService {
 
     private final AuthInfoRepository authInformationRepository;
 
-    @Autowired
-    private EmailSenderService senderService;
+    private final EmailSenderService senderService;
 
     @Override
     public void resetPassword(String login) {
