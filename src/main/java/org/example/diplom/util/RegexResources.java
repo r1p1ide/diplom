@@ -8,5 +8,5 @@ public class RegexResources {
 
     public final static String EMAIL_CONDITION = "^[^\\s@]+@([^\\s@.,]+\\.)+[^\\s@.,]{2,}$";
 
-    public final static String PHONE_CONDITION = "^\\+[\\d]+$";
+    public final static String PHONE_CONDITION = "^[\\d]+$";
 }

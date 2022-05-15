@@ -1,6 +1,7 @@
 package org.example.diplom.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.example.diplom.dao.AuthInfoRepository;
 import org.example.diplom.dao.UserInfoRepository;
 import org.example.diplom.exception.ApiException;
@@ -37,7 +38,6 @@ public class ChangePasswordServiceImpl implements ChangePasswordService {
 
         try {
             List<AuthInfo> authData = authInformationRepository.findByLogin(login);
-
             List<UserInfo> userData = userInformationRepository.findByLogin(login);
 
             LOG.log(Level.INFO, authData.toString());
@@ -45,13 +45,44 @@ public class ChangePasswordServiceImpl implements ChangePasswordService {
             AuthInfo auth = authData.get(0);
             UserInfo user = userData.get(0);
 
-                auth.setPassword(generateRandomPassword());
-                senderService.sendEmail(user.getEmail(),
-                        "Вы успешно сменили пароль.",
-                        "Ваш логин: " + login + "\nВаш новый пароль: " + auth.getPassword());
-                auth.setPassword(toMD5(auth.getPassword()));
-                authInformationRepository.save(auth);
+            auth.setPassword(generateRandomPassword());
+            senderService.sendEmail(user.getEmail(),
+                    "Вы успешно сменили пароль.",
+                    "Ваш логин: " + login + "\nВаш новый пароль: " + auth.getPassword());
+            auth.setPassword(toMD5(auth.getPassword()));
+            authInformationRepository.save(auth);
 
+        } catch (ApiException e) {
+            throw new ApiInvalidParametersException(
+                    "Неободимые параметры для запроса отсутствуют или имеют неверный формат.");
+        }
+    }
+
+    @Override
+    public void changePassword(String login, String oldPassword, String newPassword, String repeatPassword) {
+        LOG.log(Level.INFO, ENTRY);
+
+        try {
+            List<AuthInfo> authData = authInformationRepository.findByLogin(login);
+            List<UserInfo> userData = userInformationRepository.findByLogin(login);
+
+            LOG.log(Level.INFO, authData.toString());
+
+            AuthInfo auth = authData.get(0);
+            UserInfo user = userData.get(0);
+            
+            if (DigestUtils.md5Hex(oldPassword).equals(auth.getPassword()) &&
+                    newPassword.equals(repeatPassword) &&
+                    !(oldPassword.equals(newPassword))) {
+                senderService.sendEmail(user.getEmail(),
+                        "Вы успешно обновили пароль.",
+                        "Если вы видите данное сообщение, то вы успешно обновили пароль.");
+                auth.setPassword(DigestUtils.md5Hex(newPassword));
+                authInformationRepository.save(auth);
+            } else {
+                throw new ApiInvalidParametersException(
+                        "Неободимые параметры для запроса отсутствуют или имеют неверный формат.");
+            }
         } catch (ApiException e) {
             throw new ApiInvalidParametersException(
                     "Неободимые параметры для запроса отсутствуют или имеют неверный формат.");

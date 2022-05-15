@@ -1,10 +1,7 @@
 package org.example.diplom.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.diplom.dto.AuthDto;
-import org.example.diplom.dto.AuthResponse;
-import org.example.diplom.dto.ChangePasswordResponse;
-import org.example.diplom.dto.ResetPasswordDto;
+import org.example.diplom.dto.*;
 import org.example.diplom.service.AuthorizationService;
 import org.example.diplom.service.ChangePasswordService;
 import org.springframework.http.HttpStatus;
@@ -38,6 +35,18 @@ public class ChangePasswordController {
         LOG.log(Level.INFO, ENTRY);
 
         changePasswordService.resetPassword(dto.getLogin());
+
+        LOG.log(Level.INFO, EXIT);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ChangePasswordResponse(true, LocalDateTime.now(), "OK"));
+    }
+
+    @PostMapping(value = "/password", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<ChangePasswordResponse> changePassword(@Valid @RequestBody ChangePasswordDto dto){
+
+        LOG.log(Level.INFO, ENTRY);
+
+        changePasswordService.changePassword(dto.getLogin(), dto.getOldPassword(), dto.getNewPassword(), dto.getRepeatPassword());
 
         LOG.log(Level.INFO, EXIT);
         return ResponseEntity.status(HttpStatus.OK).body(
