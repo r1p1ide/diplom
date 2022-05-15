@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +33,6 @@ public class AuthController {
 
     @PostMapping(value = "/sign-in", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthResponse> signIn(@Valid @RequestBody AuthWithoutCodeDto authWithoutCodeDto){
-
         LOG.log(Level.INFO, ENTRY);
 
         authorizationService.signIn(authWithoutCodeDto);
@@ -44,7 +44,6 @@ public class AuthController {
 
     @PostMapping(value = "/sign-in-v2", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthResponse> signInV2(@Valid @RequestBody AuthWithoutCodeDto authWithoutCodeDto){
-
         LOG.log(Level.INFO, ENTRY);
 
         authorizationService.signInV2(authWithoutCodeDto);
@@ -56,7 +55,6 @@ public class AuthController {
 
     @PostMapping(value = "/sign-in/verify", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthResponse> signInWithCode(@Valid @RequestBody AuthDto authDto){
-
         LOG.log(Level.INFO, ENTRY);
 
         authorizationService.signInWithCode(authDto);

@@ -18,4 +18,5 @@ public class AuthResponse {
     private LocalDateTime timestamp;
 
     private String message;
+
 }
