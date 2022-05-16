@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class UserDto {
 
-    private Integer user_id;
+    private Integer auth_id;
 
     @NotNull
     private String login;

@@ -18,3 +18,11 @@ CREATE TABLE user_info
     role varchar(10) NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE token
+(
+    id integer GENERATED ALWAYS AS IDENTITY,
+    auth_id integer REFERENCES auth_info(id),
+    token varchar(50),
+    PRIMARY KEY (id)
+);
