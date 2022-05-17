@@ -21,9 +21,9 @@ public class Token {
     private Integer id;
 
 
-    @Column(name = "auth_id")
+    @Column(name = "authid")
     @JsonIgnore
-    private Integer auth_id;
+    private Integer authid;
 
     @Column(name = "token")
     private String token;

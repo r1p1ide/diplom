@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 import static org.example.diplom.resources.LoggerResources.ENTRY;
 import static org.example.diplom.resources.LoggerResources.EXIT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.example.diplom.util.GenerateToken.generateToken;
 
 @RestController
 @RequestMapping("/auth")
@@ -48,9 +49,11 @@ public class AuthController {
 
         List<AuthInfo> authInfoList = authInfoRepository.findByLogin(authWithoutCodeDto.getLogin());
         AuthInfo authInfo = authInfoList.get(0);
-        List<Token> tokenList = tokenRepository.findByAuthId(authInfo.getId());
+        List<Token> tokenList = tokenRepository.findByAuthid(authInfo.getId());
         Token token = tokenList.get(0);
-        token.setToken(Base64.getEncoder().encodeToString("".getBytes()));
+
+        token.setToken(Base64.getEncoder().encodeToString(generateToken(token.getAuthid()).getBytes()));
+        tokenRepository.save(token);
 
         LOG.log(Level.INFO, EXIT);
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -62,6 +65,14 @@ public class AuthController {
         LOG.log(Level.INFO, ENTRY);
 
         authorizationService.signInV2(authWithoutCodeDto);
+
+        List<AuthInfo> authInfoList = authInfoRepository.findByLogin(authWithoutCodeDto.getLogin());
+        AuthInfo authInfo = authInfoList.get(0);
+        List<Token> tokenList = tokenRepository.findByAuthid(authInfo.getId());
+        Token token = tokenList.get(0);
+
+        token.setToken(Base64.getEncoder().encodeToString(generateToken(token.getAuthid()).getBytes()));
+        tokenRepository.save(token);
 
         LOG.log(Level.INFO, EXIT);
         return ResponseEntity.status(HttpStatus.OK).body(

@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface TokenRepository extends JpaRepository<Token, Long> {
 
-    List<Token> findByAuthId(Integer auth_id);
+    List<Token> findByAuthid(Integer auth_id);
 }

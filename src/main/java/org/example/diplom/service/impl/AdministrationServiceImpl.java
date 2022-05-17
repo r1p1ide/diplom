@@ -68,7 +68,7 @@ public class AdministrationServiceImpl implements AdministrationService {
                 UserInfo user = new UserInfo(userDto);
                 Token token = new Token();
                 user.setAuth_id(auth.getId());
-                token.setAuth_id(auth.getId());
+                token.setAuthid(auth.getId());
                 userInformationRepository.save(user);
                 tokenRepository.save(token);
             } else {

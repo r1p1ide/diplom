@@ -22,7 +22,7 @@ CREATE TABLE user_info
 CREATE TABLE token
 (
     id integer GENERATED ALWAYS AS IDENTITY,
-    auth_id integer REFERENCES auth_info(id),
+    authid integer REFERENCES auth_info(id),
     token varchar(50),
     PRIMARY KEY (id)
 );
