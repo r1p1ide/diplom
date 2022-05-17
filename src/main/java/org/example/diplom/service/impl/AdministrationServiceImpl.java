@@ -3,13 +3,11 @@ package org.example.diplom.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.example.diplom.dao.AuthInfoRepository;
-import org.example.diplom.dao.TokenRepository;
 import org.example.diplom.dao.UserInfoRepository;
 import org.example.diplom.dto.UserDto;
 import org.example.diplom.exception.ApiInvalidParametersException;
 import org.example.diplom.exception.ApiUserFoundException;
 import org.example.diplom.model.AuthInfo;
-import org.example.diplom.model.Token;
 import org.example.diplom.model.UserInfo;
 import org.example.diplom.service.AdministrationService;
 import org.example.diplom.service.EmailSenderService;
@@ -34,8 +32,6 @@ public class AdministrationServiceImpl implements AdministrationService {
     private final UserInfoRepository userInformationRepository;
 
     private final AuthInfoRepository authInformationRepository;
-
-    private final TokenRepository tokenRepository;
 
     private final EmailSenderService senderService;
 
@@ -66,11 +62,8 @@ public class AdministrationServiceImpl implements AdministrationService {
 
                 authInformationRepository.save(auth);
                 UserInfo user = new UserInfo(userDto);
-                Token token = new Token();
                 user.setAuth_id(auth.getId());
-                token.setAuthid(auth.getId());
                 userInformationRepository.save(user);
-                tokenRepository.save(token);
             } else {
                 throw new ApiUserFoundException("Пользователь с таким логином уже существует!");
             }
