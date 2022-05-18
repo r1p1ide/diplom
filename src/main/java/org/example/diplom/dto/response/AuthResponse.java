@@ -1,22 +1,15 @@
 package org.example.diplom.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class AuthResponse {
+public class AuthResponse extends Response {
 
-    private Boolean success;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime timestamp;
-
-    private String message;
-
+    public AuthResponse(Boolean success, LocalDateTime dateTime, String message) {
+        super.setSuccess(success);
+        super.setTimestamp(dateTime);
+        super.setMessage(message);
+    }
 }

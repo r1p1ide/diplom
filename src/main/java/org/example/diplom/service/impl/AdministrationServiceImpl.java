@@ -3,6 +3,7 @@ package org.example.diplom.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.example.diplom.dto.DeleteUserDto;
+import org.example.diplom.exception.ApiUserNotFoundException;
 import org.example.diplom.repository.AuthInfoRepository;
 import org.example.diplom.repository.UserInfoRepository;
 import org.example.diplom.dto.UserDto;
@@ -87,7 +88,7 @@ public class AdministrationServiceImpl implements AdministrationService {
         List<AuthInfo> authList = authInformationRepository.findByLogin(deleteUserDto.getLogin());
         if (userList.isEmpty() ) {
             LOG.log(Level.INFO, THROW);
-            throw new ApiInvalidParametersException("Не существует пользователя с таким логином.");
+            throw new ApiUserNotFoundException("Не существует пользователя с таким логином.");
         }
         UserInfo userInfo = userList.get(0);
         AuthInfo authInfo = authList.get(0);
