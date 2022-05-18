@@ -1,4 +1,4 @@
-package org.example.diplom.dao;
+package org.example.diplom.repository;
 
 import org.example.diplom.model.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,4 +26,5 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
                                @Param("email") String email,
                                @Param("phone") String phone,
                                @Param("role") Integer role);
+
 }

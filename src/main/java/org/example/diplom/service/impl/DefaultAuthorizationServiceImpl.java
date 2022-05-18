@@ -2,8 +2,8 @@ package org.example.diplom.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.example.diplom.dao.AuthInfoRepository;
-import org.example.diplom.dao.UserInfoRepository;
+import org.example.diplom.repository.AuthInfoRepository;
+import org.example.diplom.repository.UserInfoRepository;
 import org.example.diplom.dto.AuthDto;
 import org.example.diplom.dto.AuthWithoutCodeDto;
 import org.example.diplom.exception.ApiException;
@@ -13,7 +13,6 @@ import org.example.diplom.model.UserInfo;
 import org.example.diplom.service.AuthorizationService;
 import org.example.diplom.service.EmailSenderService;
 import org.example.diplom.service.SmsSenderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -63,8 +62,8 @@ public class DefaultAuthorizationServiceImpl implements AuthorizationService {
                 LOG.log(Level.INFO, EXIT);
                 return true;
             } else {
-                LOG.log(Level.INFO, EXIT);
-                return false;
+                LOG.log(Level.INFO, THROW);
+                throw new ApiInvalidParametersException("Неверные логин или пароль.");
             }
         } catch (ApiException e) {
             throw new ApiInvalidParametersException(
@@ -92,9 +91,10 @@ public class DefaultAuthorizationServiceImpl implements AuthorizationService {
                 return true;
             } else {
                 LOG.log(Level.INFO, THROW);
-                return false;
+                throw new ApiInvalidParametersException("Неверные логин или пароль.");
             }
         } catch (ApiException e) {
+            LOG.log(Level.INFO, THROW);
             throw new ApiInvalidParametersException(
                     "Неободимые параметры для запроса отсутствуют или имеют неверный формат.");
         }

@@ -2,8 +2,8 @@ package org.example.diplom.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.example.diplom.dao.AuthInfoRepository;
-import org.example.diplom.dao.UserInfoRepository;
+import org.example.diplom.repository.AuthInfoRepository;
+import org.example.diplom.repository.UserInfoRepository;
 import org.example.diplom.exception.ApiException;
 import org.example.diplom.exception.ApiInvalidParametersException;
 import org.example.diplom.model.AuthInfo;
@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.example.diplom.resources.LoggerResources.ENTRY;
+import static org.example.diplom.resources.LoggerResources.THROW;
 import static org.example.diplom.util.GenerateRandomPassword.generateRandomPassword;
 import static org.example.diplom.util.GenerateRandomPassword.toMD5;
 
@@ -80,10 +81,12 @@ public class ChangePasswordServiceImpl implements ChangePasswordService {
                 auth.setPassword(DigestUtils.md5Hex(newPassword));
                 authInformationRepository.save(auth);
             } else {
+                LOG.log(Level.INFO, THROW);
                 throw new ApiInvalidParametersException(
                         "Неободимые параметры для запроса отсутствуют или имеют неверный формат.");
             }
         } catch (ApiException e) {
+            LOG.log(Level.INFO, THROW);
             throw new ApiInvalidParametersException(
                     "Неободимые параметры для запроса отсутствуют или имеют неверный формат.");
         }

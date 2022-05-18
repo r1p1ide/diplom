@@ -1,4 +1,4 @@
-package org.example.diplom.dto;
+package org.example.diplom.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthResponse {
+public class UserResponse {
 
     private Boolean success;
 
@@ -18,5 +18,4 @@ public class AuthResponse {
     private LocalDateTime timestamp;
 
     private String message;
-
 }

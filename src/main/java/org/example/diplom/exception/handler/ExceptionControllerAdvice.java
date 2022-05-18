@@ -1,6 +1,6 @@
 package org.example.diplom.exception.handler;
 
-import org.example.diplom.dto.UserResponse;
+import org.example.diplom.dto.response.UserResponse;
 import org.example.diplom.exception.ApiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

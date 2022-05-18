@@ -1,4 +1,4 @@
-package org.example.diplom.dto;
+package org.example.diplom.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

@@ -1,8 +1,7 @@
-package org.example.diplom.dao;
+package org.example.diplom.repository;
 
 import org.example.diplom.model.AuthInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,4 +10,5 @@ import java.util.List;
 public interface AuthInfoRepository extends JpaRepository<AuthInfo, Long> {
 
     List<AuthInfo> findByLogin(String login);
+
 }

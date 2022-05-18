@@ -2,7 +2,7 @@ package org.example.diplom.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.diplom.dto.AuthDto;
-import org.example.diplom.dto.AuthResponse;
+import org.example.diplom.dto.response.AuthResponse;
 import org.example.diplom.dto.AuthWithoutCodeDto;
 import org.example.diplom.service.AuthorizationService;
 import org.springframework.http.HttpStatus;
